@@ -1,0 +1,17 @@
+plate_generator_optimized_2.py : genera placas con post-procesamiento, limpias y mascara de letras y JSON con las bounding box de cada letra en la placa
+
+dataset_yolo_character.ipynb : toma las placas y JSON y los convierte a formato de entrenamiento de YOLO, genera YAML de YOLO, entrena al modelo YOLO a detectar bounding box en placas
+
+processDataset.ipynb : toma las imagenes y JSON de placas y genera un dataset las letras que extrae de las placas, usando los JSON para las posiciones de cada una
+
+CNN_characteres.ipynb : se entrena una CNN con el dataset de letras. Para mejor resultados se entrana con varios conjuntos, primero con dataset de letras limpias, y luego con sucias, y repetir par de veces
+
+inference_pepeline.ipynb : script de inferencia completa, se carga una imagen, se detecta las letras con el modelo YOLO entrenado, luego con RANSAC se hace para todas las letras detectadas una regresion lineal para ver si pertenecen al mismo renglon. y si hay mas de un renglon se selecciona el que mayor area tenga, y luego se pasa cada letra seleccionada por RANSAC detectada por la CNN entrenada y se identifica la letra correspondiente
+
+
+EXTRAS y UTILES
+TEST_box_detector_CNN.ipynb : CNN regresor que predice 5 valores, que representan el bounding box de todas las letras juntas en una placa, la informacion se obtiene de los JSON de las placas y se calcula el bounding box general de todas ellas, se predicen los valores de x_center, y_center, width, height y angle: Este se puede usar para mejorar la precision de eliminar el paso de regresion RANSAC en la inferencia para detectar cuales letras son las importantes en la placa. Este modelo, ya te seleccionaria la region de interes principal en cada placa, y es mas eficiente y rapido
+
+processDataset_mask_JSON.py y processDataset_denoise_JSON.py : procesan un dataset generado de placas, y recortan la bounding box general de todas las letras y las guarda en una carpeta ya recortada la zona de interés 
+
+U_net_mask.ipynb : entrena una CNN Unet para generar mascaras de letras limpias dado una imagen de placa, se entrena tanto con el dataset de placas originales como con el generado con las bounding boxes globales generados por processDataset_mask_JSON.py. Esto se podria utilizar para usarlas en el proceso de inferencia, pero habria que entrenar un modelo tanto de YOLO como CNN para detectar letras en placas o mascaras y clasificar letras en imagenes limpias como mascaras
