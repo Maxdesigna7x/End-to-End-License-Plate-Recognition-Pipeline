@@ -4,7 +4,7 @@ Este repositorio contiene un pipeline completo de Machine Learning para el Recon
 
 El proyecto está diseñado para ser modular, permitiendo entrenar y evaluar cada componente de la arquitectura por separado, y ofrece herramientas experimentales avanzadas (U-Net, Regresión de 5 grados de libertad) para optimizar el rendimiento en condiciones del mundo real.
 
-![Geometry Nodes Setup](PipelineOK.png)
+![Geometry Nodes Setup](PipelineOK.jpg)
 ---
 
 ## 🏗️ Arquitectura del Pipeline Principal
